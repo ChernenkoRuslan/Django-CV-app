@@ -9,6 +9,9 @@ import os
 
 class Video(models.Model):
     name = models.CharField(max_length=100)
+    record_date = models.DateField()
+    workshop = models.CharField(max_length=100)
+    description = models.TextField()
     video = models.FileField(upload_to='videos/')
     upload_date = models.DateTimeField(auto_now_add=True)
     screenshot = models.ImageField(

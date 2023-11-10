@@ -1,13 +1,32 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>{%block title%}{</title>
+    <title>{%block title%}{% endblock %} | Команда Sweepnet</title>
     <link
       rel="stylesheet"
-      href="assets/vendors/fontawesome-free/css/all.min.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+      href="{%static 'vendors/fontawesome-free/css/all.min.css'%}" />
+    <link rel="stylesheet" href="{%static 'css/style.css'%}" />
   </head>
-</html>
+
+    <body>
+
+    {% include 'main/elements/header.html' %}
+
+        <div class="container">
+            <div class="row my-5">
+                <div class="col-md-12">
+                    {% block body_content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+
+    {% include 'main/elements/footer.html' %}
+
+    </body>
+
+  </html>

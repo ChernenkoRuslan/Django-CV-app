@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Video
+from .forms import VideoForm
 from django.conf import settings
 from django.views.generic import ListView
 import random
@@ -13,18 +14,29 @@ def index(request):
 
 
 def upload_video(request):
+    error = ''
+    form = VideoForm()
+    video = Video()
     if request.method == 'POST':
-        title = request.POST['title']
-        file = request.FILES['file']
+        form = VideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('play_video', video_id=video.id)
+        else:
+            error = 'Форма заполнена неверно'
+            return render(request, 'main/upload_video.html', {'form': form})
+    # if request.method == 'POST':
+    #     title = request.POST['title']
+    #     file = request.FILES['file']
 
-        video = Video()
-        video.name = title
-        video.video = file
-        video.save()
+    #     video = Video()
+    #     video.name = title
+    #     video.video = file
+    #     video.save()
 
-        return redirect('play_video', video_id=video.id)
+    #     return redirect('play_video', video_id=video.id)
 
-    return render(request, 'main/upload_video.html')
+    return render(request, 'main/upload_video.html', {'form': form, 'error': error})
 
 
 def play_video(request, video_id):

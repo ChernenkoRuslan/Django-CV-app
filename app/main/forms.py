@@ -1,18 +1,36 @@
 from django.forms import ModelForm
 from django import forms
 from django.db import models
-from .models import Video
+from .models import Image
 
 
-class VideoForm(ModelForm):
+# class ImageForm(ModelForm):
+#     class Meta:
+#         model = Image
+#         fields = ['name', 'record_date', 'workshop', 'description', 'image']
+
+#     def __init__(self, *args, **kwargs):
+#         super(ImageForm, self).__init__(*args, **kwargs)
+#         self.fields['image'].required = True
+
+
+class ImageForm(ModelForm):
     class Meta:
-        model = Video
-        fields = ['name', 'record_date', 'workshop', 'description', 'video']
+        model = Image
+        fields = ['name', 'record_date', 'workshop', 'description', 'image']
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Введите название', 'label': 'Название записи'}),
+            'record_date': forms.DateInput(attrs={'placeholder': 'выберите  дату', 'label': 'Дата снимка', 'type': 'date'}),
+            'workshop': forms.Select(attrs={'placeholder': 'Выберите площадку', 'label': 'Площадка', }),
+            'description': forms.Textarea(attrs={'placeholder': 'Введите описание', 'label': 'Описание'}),
+        }
 
     def __init__(self, *args, **kwargs):
-        super(VideoForm, self).__init__(*args, **kwargs)
-        self.fields['video'].required = True
-
+        super(ImageForm, self).__init__(*args, **kwargs)
+        self.fields['name'].label = 'Название записи'
+        self.fields['record_date'].label = 'Дата снимка'
+        self.fields['workshop'].label = 'Площадка'
+        self.fields['description'].label = 'Описание'
 
 # class VideoForm(forms.ModelForm):
 #     Name = models.CharField(max_length=100)

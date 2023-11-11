@@ -5,7 +5,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('', views.index, name='home'),
-    path('upload/', views.upload_video, name='upload_video'),
-    path('play/<int:video_id>/', views.play_video, name='play_video'),
-    path('list/', views.video_list, name='video_list'),
+    path('upload/', views.upload_image, name='upload_image'),
+    path('show/<int:image_id>/', views.show_image, name='show_image'),
+    path('list/', views.image_list, name='image_list'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

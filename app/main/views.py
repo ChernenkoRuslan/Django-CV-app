@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Video
-from .forms import VideoForm
+from .models import Image
+from .forms import ImageForm
 from django.conf import settings
 from django.views.generic import ListView
 import random
@@ -13,51 +13,32 @@ def index(request):
     return render(request, 'main/index.html')
 
 
-def upload_video(request):
+def upload_image(request):
     error = ''
-    form = VideoForm()
-    video = Video()
+    form = ImageForm()
     if request.method == 'POST':
-        form = VideoForm(request.POST, request.FILES)
+        form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('play_video', video_id=video.id)
+            image = form.save()
+            return redirect('show_image', image_id=image.id)
         else:
             error = 'Форма заполнена неверно'
-            return render(request, 'main/upload_video.html', {'form': form})
-    # if request.method == 'POST':
-    #     title = request.POST['title']
-    #     file = request.FILES['file']
+            return render(request, 'main/upload_image.html', {'form': form})
 
-    #     video = Video()
-    #     video.name = title
-    #     video.video = file
-    #     video.save()
-
-    #     return redirect('play_video', video_id=video.id)
-
-    return render(request, 'main/upload_video.html', {'form': form, 'error': error})
+    return render(request, 'main/upload_image.html', {'form': form, 'error': error})
 
 
-def play_video(request, video_id):
-    video = Video.objects.get(id=video_id)
+def show_image(request, image_id):
+    image = Image.objects.get(id=image_id)
     random_string = ''.join(random.choices(
         string.ascii_uppercase + string.digits, k=10))
     return render(request,
                   'main/play_video.html',
-                  {'video': video,
+                  {'image': image,
                       'random_string': random_string,
                       'MEDIA_URL': settings.MEDIA_URL})
 
 
-def video_list(request):
-    videos = Video.objects.all()
-    return render(request, 'main/video_list.html', {'videos': videos})
-
-# class VideoListView(ListView):
-#     model = Video
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['MEDIA_URL'] = settings.MEDIA_URL
-#         return context
+def image_list(request):
+    images = Image.objects.all()
+    return render(request, 'main/images_list.html', {'images': images})

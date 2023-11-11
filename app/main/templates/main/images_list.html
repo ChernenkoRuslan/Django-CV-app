@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{%block title%}Загруженные изображения{% endblock %}
+
+{% block body_content%}
+
+<h1>Загруженные изображения</h1>
+<br>
+<hr>
+<br>
+<ul>
+  {% for image in images %}
+  <li>
+    {{ image.name }} - {{ image.upload_date|date }} | <a href="{% url 'show_image' image.id %}">Просмотреть</a>
+  </li>
+  {% empty %}
+  <li>Пока нет загруженных изображений.</li>
+  {% endfor %}
+</ul>
+
+{%endblock%}

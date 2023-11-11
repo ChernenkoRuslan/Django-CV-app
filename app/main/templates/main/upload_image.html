@@ -1,0 +1,31 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{%block title%}Загрузка изображения{% endblock %}
+
+{% block body_content%}
+
+<h1>Загрузите изображение для анализа</h1>
+    <hr>
+    <br>
+<div class='row'>
+    <div class="form-group col-md-6">
+        <form method="post">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <br>
+            <button class = "btn btn-primary mb-4" type="submit">Проанализировать</button>
+        </form>
+        <span>{{ error }}</span>
+    </div>
+    <div class="col-md-6">
+        <center>
+        <img src="{% static "images/manufacturing.png" %}" width="80%" align='center'>
+        </center>
+    </div>
+</div>
+{%endblock%}
+
+

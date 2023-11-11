@@ -3,22 +3,152 @@
 <!-- saved from url=(0026)http://sweepnetbot.ru/RZD/ -->
 <html lang="ru">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
-    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-    <meta
-      content="width=device-width, initial-scale=1.0, user-scalable=no"
-      name="viewport" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Система видео-детекции | Команда Sweepnet</title>
     <link
-      href="http://sweepnetbot.ru/RZD/favicon.ico"
+      href="{%static 'favicon.ico' %}"
       rel="icon"
       type="image/x-icon" />
-    <title>Система видео-детекции</title>
-    <meta content="РЖД" name="description" />
-    <meta content="ржд" name="keywords" />
+    <link
+      rel="stylesheet"
+      href="{%static 'vendors/fontawesome-free/css/all.min.css'%}" />
+    <link rel="stylesheet" href="{%static 'css/style.css'%}" />
   </head>
 
-  <body>
-    <h1>Привет!</h1>
-  </body>
+<body>
+    <header class="foi-header landing-header"  style="height: 80vh;background: linear-gradient(228deg, rgba(2,0,36,1) 0%, rgba(9,9,121,0.37479996881565125) 22%, rgba(255,255,255,0.37479996881565125) 100%);">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light foi-navbar">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                  <img src="{%static 'images/logo.png'%}" width="150" alt="Sweepnet">
+                </a>
+                <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="index.html">Главная<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">О нас</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="features.html">Возможности</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="features.html">Приложение</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mt-2 mt-lg-0">
+                        <li class="nav-item mr-2 mb-3 mb-lg-0">
+                            <a class="btn btn-secondary" href="register.html">Регистрация</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-secondary" href="login.html">Вход</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="header-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h1>Приложение, которое делает работу безопаснее</h1>
+                        <p class="text-dark">Сервис принимает на вход кадры и имея конфигурацию опасных зон для каждой камеры, определять в каждый момент времени, зашел ли человек в опасную зону.</p>
+                        <a class="btn btn-primary mb-4" href='{% url "upload_video" %}'>Начать</a>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="{% static 'assets/images/png-transparent-safety.png'%}" alt="app" width="388px" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <section class="py-5 mb-5">
+        <div class="container">
+            <h2 class="section-title">Возможности приложения</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5>Дообучение YOLO</h5>
+                    <p class="text-dark">Дообучение модели YOLO изображениями людей на завод.</p>
+                    <p class="mb-5"><a href="#!" class="text-primary mb-5">Узнать больше</a></p>
+                    <h5>Валидация</h5>
+                    <p class="text-dark">Использование тренировочных данных для валидации модели.</p>
+                    <p class="mb-5"><a href="#!" class="text-primary mb-5">Узнать больше</a></p>
+                </div>
+                <div class="col-lg-4 mb-3 mb-lg-0">
+                    <h5>Фронт</h5>
+                    <p class="text-dark">Создание фронта для отображения результата.</p>
+                    <p class="mb-5"><a href="#!" class="text-primary mb-5">Узнать больше</a></p>
+                    <h5>Сегментация</h5>
+                    <p class="text-dark">Фиксация не только баундбокса но и сгементация людей.</p>
+                    <p class="mb-5"><a href="#!" class="text-primary mb-5">Узнать больше</a></p>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="text-gray font-os font-weight-semibold">Разработано специально для Цифрового прорыва и Минпромторга РФ</h6>
+                    <br>
+                    <img src="{% static 'images/Minprom_logo.png' %}" alt="Минпромторг" class="img-fluid">
+                    <br>
+                    <hr>
+                    <img src="{% static 'images/cp_logo.jpeg' %}" alt="Цифровой прорыв" class="img-fluid" width='250px'>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="foi-footer text-white">
+        <div class="container">
+            <div class="row footer-content">
+                <div class="col-xl-6 col-lg-7 col-md-8">
+                    <h2 class="mb-0">Остались вопросы? Напишите нам.</h2>
+                </div>
+                <div class="col-md-4 col-lg-5 col-xl-6 py-3 py-md-0 d-md-flex align-items-center justify-content-end">
+                    <a href="contact.html" class="btn btn-danger btn-lg">Написать</a>
+                </div>
+            </div>
+            <div class="row footer-widget-area">
+                <div class="col-md-3">
+                    <div class="py-3">
+                        <img src="{%static 'images/logo.png'%}" width="200" alt="Sweepnet">
+                    </div>
+                </div>
+                <div class="col-md-3 mt-3 mt-md-0">
+                    <nav>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a href="#!" class="nav-link">О нас</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#!" class="nav-link">О решении</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-3 mt-3 mt-md-0">
+                    <nav>
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a href="#!" class="nav-link">Войти</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#!" class="nav-link">Зарегистрироваться</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-md-3 mt-3 mt-md-0">
+                    <p>
+                        &copy; 2023 <a href="" target="_blank" rel="noopener noreferrer" class="text-reset">Команда Sweepnet</a>.
+                    </p>
+                    <p>Права защищены</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="{% static 'vendors/jquery/jquery.min.js'%}"></script>
+    <script src="{% static 'vendors/popper.js/popper.min.js'%}"></script>
+    <script src="{% static 'vendors/bootstrap/dist/js/bootstrap.min.js'%}"></script>
+</body>
+
 </html>

@@ -5,7 +5,7 @@ from django.conf import settings
 from django.views.generic import ListView
 import random
 import string
-
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 
@@ -15,9 +15,8 @@ def index(request):
 
 def upload_image(request):
     error = ''
-    form = ImageForm()
+    form = ImageForm(request.POST, request.FILES)
     if request.method == 'POST':
-        form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.save()
             return redirect('show_image', image_id=image.id)
@@ -30,11 +29,18 @@ def upload_image(request):
 
 def show_image(request, image_id):
     image = Image.objects.get(id=image_id)
+    person_probability = "{:.2%}".format(image.person)
+    person_warning = "{:.2%}".format(image.warning)
+    helmet_probability = "{:.2%}".format(image.seg_warning)
+    print(person_probability)
     random_string = ''.join(random.choices(
         string.ascii_uppercase + string.digits, k=10))
     return render(request,
                   'main/play_video.html',
                   {'image': image,
+                   'person_probability': person_probability,
+                   'person_warning': person_warning,
+                   'helmet_probability': helmet_probability,
                       'random_string': random_string,
                       'MEDIA_URL': settings.MEDIA_URL})
 

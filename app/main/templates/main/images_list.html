@@ -11,6 +11,19 @@
 <br>
 <ul>
   {% for image in images %}
+    <div class="col-md-6">
+        <article class="blog-post media">
+            <div class="blog-post-thumbnail-wrapper">
+                <img src=""{{ MEDIA_URL }}{{ image.image }}"" alt="blog" width="155px" class="blog-post-thumbnail mr-md-3">
+                                        <span class="blog-post-badge">Trending</span>
+                                    </div>
+                                    <div class="media-body">
+                                        <p class="blog-post-date">02 APR 2020</p>
+                                        <h5 class="blog-post-title">Whether you have questions or you would</h5>
+                                        <p class="blog-post-excerpt">All the basics for businesses that are just getting started.</p>
+                                    </div>
+                                </article>
+                            </div>
   <li>
     {{ image.name }} - {{ image.upload_date|date }} | <a href="{% url 'show_image' image.id %}">Просмотреть</a>
   </li>

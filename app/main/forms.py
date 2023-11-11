@@ -4,16 +4,6 @@ from django.db import models
 from .models import Image
 
 
-# class ImageForm(ModelForm):
-#     class Meta:
-#         model = Image
-#         fields = ['name', 'record_date', 'workshop', 'description', 'image']
-
-#     def __init__(self, *args, **kwargs):
-#         super(ImageForm, self).__init__(*args, **kwargs)
-#         self.fields['image'].required = True
-
-
 class ImageForm(ModelForm):
     class Meta:
         model = Image

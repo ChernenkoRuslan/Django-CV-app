@@ -1,1 +1,38 @@
-dslkfjskldm
+{% extends "main/base.html" %}
+{% load static %}
+
+{%block title%}Просмотр результатов анализа{% endblock %}
+
+{% block body_content%}
+
+<h1>Результаты распознования</h1>
+    <hr>
+    <br>
+    <div class="row" style="text-align:center">
+        <div class="col-lg-3">
+            <h2 style='color:blue;text-align:center'>{{ image.count_persons }}</h2>
+            <p class="text-dark">Количество людей</p>
+        </div>
+        <div class="col-lg-3">
+            <h2 style='color:blue;text-align:center'>{{person_probability}}</h2>
+            <p class="text-dark">Вероятность человек, %</p>
+        </div>
+        <div class="col-lg-3">
+            <h2 style='color:blue;text-align:center'>{{ person_warning }}</h2>
+            <p class="text-dark">В опасной зоне (boundbox),%</p>
+        </div>
+        <div class="col-lg-3">
+            <h2 style='color:blue;text-align:center'>{{ helmet_probability }}</h2>
+            <p class="text-dark">В опасной зоне (сегментация), %</p>
+        </div>
+    </div>
+    
+
+
+        <center>
+        <img src="{{ image.image.url }}" width="48%" align='center'>
+        <img src="{{ image.detected_image.url }}" width="48%" align='center'>
+        </center>
+    </div>
+</div>
+{%endblock%}

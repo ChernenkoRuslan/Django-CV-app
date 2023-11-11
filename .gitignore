@@ -2,3 +2,8 @@
 .vscode
 FOIapplanding/
 FOIapplanding.zip
+app/yolov8x-seg.pt
+app\yolov8x-seg.pt
+basemodel_v3.zip
+basemodel_v3/
+cv model/

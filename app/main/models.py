@@ -30,43 +30,51 @@ class Image(models.Model):
     record_date = models.DateField()
     workshop = models.CharField(max_length=100, choices=WORKSHOP_CHOICES)
     description = models.TextField(blank=True)
-    image = models.ImageField(upload_to='images/', blank=True)
+    image = models.ImageField(upload_to='images/%Y/%m/%d/', blank=True)
     upload_date = models.DateTimeField(auto_now_add=True)
     detected_image = models.ImageField(
         upload_to='detected_images/', blank=True)
+    count_persons = models.IntegerField(default=0)
+    person = models.FloatField(default=0)
+    warning = models.FloatField(default=0)
+    seg_warning = models.FloatField(default=0)
+    # result = [{'file_name': '08e4ecce-be75-4064-aff2-ce6b18b56934_itqB9qP.jpg', 'count_persons': 1,
+    #            'person': 0.6837488412857056, 'warning': 0, 'seg_warning': 0, 'helmet': 0.53}]
 
     def __str__(self):
         return self.name
 
-    # def save(self, *args, **kwargs):
-    #     super().save(*args, **kwargs)
-    #     image_path = self.image.path
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        image_path = self.image.path
+        zone_name = self.workshop.replace('danger_', '')
+        print(zone_name)
 
-    #     # Обнаружение объектов в видео и сохранение обнаруженного видео
-    #     detector = ModelDetected()
-    #     print('путь к текущему видео: ', image_path)
-    #     print('путь к обнаруженному видео: ', "media/" +
-    #           ".".join(self.image.name.split(".")[:-1]) + "_output.jpg")
+        # Обнаружение объектов в видео и сохранение обнаруженного видео
+        device = 'cpu'
+        # Загружаем модель
+        model_seg = YOLO("yolov8x-seg.pt")
+        detector = ModelDetected(model=model_seg, device=device)
+        print(os.getcwd())
+        print(os.listdir("main/danger_zones"))
 
-    #     detector.load_photos(image_path, image_path, "media/" +
-    #                          ".".join(self.video.name.split(".")[:-1]) + "_output.jpg")
-    #     # detector.load_video(video_path, video_path, "output.mp4")
-    #     detector.detected()
-    #     print(detector.history)
-    #     detected_image_path = detector.output_file
-    #     print(detected_image_path)
-    #     # Сохранение обнаруженного видео
-    #     self.detected_image.save(detected_image_path, open(
-    #         detected_image_path, "rb"), save=False)
+        # Загрузка опасных зон
+        detector.load_danger_zones(path_zones="main/danger_zones")
+        print(detector.danger_zones.keys())
+        test_zone = 'DpR-Csp-uipv-ShV-V1'
+        test_file = image_path
+        result_df, output_filename = detector.detected_by_file(
+            input_file=test_file, zone_name=test_zone, output_dir='media/output')
+        result_dict = result_df.to_dict('records')
+        print(result_dict)
+        print(output_filename)
+        self.detected_image = output_filename.replace(
+            'media/', '')
+        self.count_persons = result_dict[0]['count_persons']
+        self.person = result_dict[0]['person']
+        self.warning = result_dict[0]['warning']
+        self.seg_warning = result_dict[0]['seg_warning']
 
-    #     # Сохранение только определенных полей модели
-    #     super().save(update_fields=['detected_image'])
-
-
-# class Signal_record(models.Model):
-#     name = models.CharField(max_length=100)
-#     image = models.ForeignKey(Image, on_delete=models.CASCADE)
-#     timestamp = models.FloatField()
-
-#     def __str__(self):
-#         return self.name
+        # Сохранение только определенных полей модели
+        super().save(update_fields=[
+            'detected_image', 'count_persons', 'person', 'warning', 'seg_warning'])
